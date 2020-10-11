@@ -12,6 +12,7 @@ exports.typeDefs = gql`
   }
 
   type Post {
+    _id: ID
     title: String!
     imageUrl: String!
     categories: [String]!
