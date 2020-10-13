@@ -21,12 +21,10 @@
 </template>
 
 <script>
-import { gql } from "apollo-boost";
 import { mapGetters } from "vuex";
 
 export default {
   name: 'Home',
-  components: {},
   created() {
     this.handleGetCarouselPosts();
   },
