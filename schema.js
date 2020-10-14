@@ -42,6 +42,7 @@ exports.typeDefs = gql`
       description: String!
       creatorId: ID!
     ): Post!
+    signinUser(username: String!, password: String!): User
     signupUser(username: String!, email: String!, password: String!): User
   }
 `;
