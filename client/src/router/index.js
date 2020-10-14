@@ -1,51 +1,51 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../components/Home.vue'
-import AddPost from '../components/Posts/AddPost.vue'
-import Posts from '../components/Posts/Posts.vue'
-import Profile from '../components/Auth/Profile.vue'
-import Signin from '../components/Auth/Signin.vue'
-import Signup from '../components/Auth/Signup.vue'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import Home from '../components/Home.vue';
+import AddPost from '../components/Posts/AddPost.vue';
+import Posts from '../components/Posts/Posts.vue';
+import Profile from '../components/Auth/Profile.vue';
+import Signin from '../components/Auth/Signin.vue';
+import Signup from '../components/Auth/Signup.vue';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
   },
   {
-    path: "/posts",
-    name: "Posts",
-    component: Posts
+    path: '/posts',
+    name: 'Posts',
+    component: Posts,
   },
   {
-    path: "/post/add",
-    name: "AddPost",
-    component: AddPost
+    path: '/post/add',
+    name: 'AddPost',
+    component: AddPost,
   },
   {
-    path: "/profile",
-    name: "Profile",
-    component: Profile
+    path: '/profile',
+    name: 'Profile',
+    component: Profile,
   },
   {
-    path: "/signin",
-    name: "Signin",
-    component: Signin
+    path: '/signin',
+    name: 'Signin',
+    component: Signin,
   },
   {
-    path: "/Signup",
-    name: "Signup",
-    component: Signup
+    path: '/Signup',
+    name: 'Signup',
+    component: Signup,
   },
-]
+];
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;

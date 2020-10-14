@@ -11,12 +11,17 @@
       <v-divider></v-divider>
 
       <v-list>
-        <v-list-item ripple v-for="item in sideNavItems" :key="item.title" :to="item.link">
+        <v-list-item
+          ripple
+          v-for="item in sideNavItems"
+          :key="item.title"
+          :to="item.link"
+        >
           <v-list-item-action>
-            <v-icon>{{item.icon}}</v-icon>
+            <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            {{item.title}}
+            {{ item.title }}
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -33,14 +38,26 @@
 
         <v-spacer></v-spacer>
 
-        <v-text-field flex prepend-icon="mdi-card-search" placeholder="Search posts" color="accent" single-line hide-details></v-text-field>
+        <v-text-field
+          flex
+          prepend-icon="mdi-card-search"
+          placeholder="Search posts"
+          color="accent"
+          single-line
+          hide-details
+        ></v-text-field>
 
         <v-spacer></v-spacer>
 
         <v-toolbar-items class="hidden-xs-only">
-          <v-btn text v-for="item in horizontalNavItems" :key="item.title" :to="item.link">
-            <v-icon class="hidden-sm-only" left>{{item.icon}}</v-icon>
-            {{item.title}}
+          <v-btn
+            text
+            v-for="item in horizontalNavItems"
+            :key="item.title"
+            :to="item.link"
+          >
+            <v-icon class="hidden-sm-only" left>{{ item.icon }}</v-icon>
+            {{ item.title }}
           </v-btn>
         </v-toolbar-items>
       </v-app-bar>
@@ -49,7 +66,7 @@
     <main>
       <v-container class="mt-10">
         <transition name="fade">
-          <router-view/>
+          <router-view />
         </transition>
       </v-container>
     </main>
@@ -62,29 +79,29 @@ export default {
   components: {},
   data() {
     return {
-      sideNav: false
+      sideNav: false,
     };
   },
   computed: {
     horizontalNavItems() {
       return [
-        { icon: "mdi-chat", title: "Posts", link: "/posts" },
-        { icon: "mdi-lock-open", title: "Sign In", link: "/signin" },
-        { icon: "mdi-creation", title: "Sign Up", link: "/signup" }
+        { icon: 'mdi-chat', title: 'Posts', link: '/posts' },
+        { icon: 'mdi-lock-open', title: 'Sign In', link: '/signin' },
+        { icon: 'mdi-creation', title: 'Sign Up', link: '/signup' },
       ];
     },
     sideNavItems() {
       return [
-        { icon: "mdi-chat", title: "Posts", link: "/posts" },
-        { icon: "mdi-lock-open", title: "Sign In", link: "/signin" },
-        { icon: "mdi-creation", title: "Sign Up", link: "/signup" }
+        { icon: 'mdi-chat', title: 'Posts', link: '/posts' },
+        { icon: 'mdi-lock-open', title: 'Sign In', link: '/signin' },
+        { icon: 'mdi-creation', title: 'Sign Up', link: '/signup' },
       ];
     },
   },
   methods: {
     toggleSideNav() {
       this.sideNav = !this.sideNav;
-    }
+    },
   },
 };
 </script>
