@@ -30,6 +30,10 @@ exports.typeDefs = gql`
     messageUser: User!
   }
 
+  type Token {
+    token: String!
+  }
+
   type Query {
     getPosts: [Post]
   }
@@ -42,7 +46,7 @@ exports.typeDefs = gql`
       description: String!
       creatorId: ID!
     ): Post!
-    signinUser(username: String!, password: String!): User
-    signupUser(username: String!, email: String!, password: String!): User
+    signinUser(username: String!, password: String!): Token
+    signupUser(username: String!, email: String!, password: String!): Token
   }
 `;
