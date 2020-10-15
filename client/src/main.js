@@ -48,4 +48,7 @@ new Vue({
   store,
   vuetify,
   render: (h) => h(App),
+  created() {
+    this.$store.dispatch('getCurrentUser');
+  },
 }).$mount('#app');
