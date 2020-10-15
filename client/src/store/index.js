@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-
+import router from '../router';
 import { defaultClient as apolloClient } from '../main';
 import { GET_CURRENT_USER, GET_POSTS, SIGNIN_USER } from './queries';
 
@@ -9,6 +9,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     posts: [],
+    user: null,
     loading: false,
   },
   mutations: {
@@ -60,6 +61,8 @@ export default new Vuex.Store({
         })
         .then(({ data }) => {
           localStorage.setItem('token', data.signinUser.token);
+          // to make sure created method is run in main.js (we run getCurrentUser), reload the page
+          router.go();
         })
         .catch((err) => {
           console.error(err);
@@ -68,6 +71,7 @@ export default new Vuex.Store({
   },
   getters: {
     posts: (state) => state.posts,
+    user: (state) => state.user,
     loading: (state) => state.loading,
   },
   modules: {},
