@@ -118,7 +118,7 @@
           >
             <v-icon class="mr-3">mdi-cancel</v-icon>
             <h3>{{ authError.message }}</h3>
-            <v-btn dark flat to="/signin">Sign in</v-btn>
+            <v-btn dark text to="/signin">Sign in</v-btn>
           </div>
         </v-snackbar>
       </v-container>

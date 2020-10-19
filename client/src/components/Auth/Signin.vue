@@ -52,7 +52,7 @@
                 <div class="text-center">
                   <v-btn
                     :loading="loading"
-                    :disabled="!isFormValid"
+                    :disabled="!isFormValid || loading"
                     color="accent"
                     type="submit"
                   >
