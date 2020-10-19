@@ -104,6 +104,23 @@
             <v-btn dark text @click="authSnackbar = false">Close</v-btn>
           </div>
         </v-snackbar>
+
+        <v-snackbar
+          v-if="authError"
+          v-model="authErrorSnackbar"
+          color="info"
+          :timeout="5000"
+          bottom
+          left
+        >
+          <div
+            style="display: flex; align-items: center; justify-content: space-between;"
+          >
+            <v-icon class="mr-3">mdi-cancel</v-icon>
+            <h3>{{ authError.message }}</h3>
+            <v-btn dark flat to="/signin">Sign in</v-btn>
+          </div>
+        </v-snackbar>
       </v-container>
     </main>
   </v-app>
@@ -114,11 +131,11 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: 'App',
-  components: {},
   data() {
     return {
       sideNav: false,
       authSnackbar: false,
+      authErrorSnackbar: false,
     };
   },
   watch: {
@@ -127,9 +144,14 @@ export default {
         this.authSnackbar = true;
       }
     },
+    authError(value) {
+      if (value !== null) {
+        this.authErrorSnackbar = true;
+      }
+    },
   },
   computed: {
-    ...mapGetters(['user']),
+    ...mapGetters(['authError', 'user']),
     horizontalNavItems() {
       let items = [
         { icon: 'mdi-chat', title: 'Posts', link: '/posts' },
