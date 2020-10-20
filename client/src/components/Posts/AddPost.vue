@@ -74,7 +74,7 @@
             </v-flex>
           </v-layout>
 
-          <v-layout row>
+          <v-layout align-content-center column wrap>
             <v-flex xs12>
               <v-btn
                 :loading="loading"
@@ -83,7 +83,7 @@
                 type="submit"
               >
                 <span slot="loader" class="custom-loader">
-                  <v-icon light>cached</v-icon>
+                  <v-icon light>mdi-cached</v-icon>
                 </span>
                 Submit</v-btn
               >
@@ -123,6 +123,27 @@ export default {
           desc.length < 200 || 'Description must have less than 200 characters',
       ],
     };
+  },
+  computed: {
+    ...mapGetters(['loading', 'user']),
+  },
+  methods: {
+    handleAddPost() {
+      if (this.$refs.form.validate()) {
+        const categoriesOnly = this.categories.filter(
+          (item) => typeof item === 'string'
+        );
+        console.log(categoriesOnly);
+        this.$store.dispatch('addPost', {
+          title: this.title,
+          imageUrl: this.imageUrl,
+          categories: categoriesOnly,
+          description: this.description,
+          creatorId: this.user._id,
+        });
+        this.$router.push('/');
+      }
+    },
   },
 };
 </script>

@@ -43,7 +43,7 @@ exports.typeDefs = gql`
     addPost(
       title: String!
       imageUrl: String!
-      categories: [String!]
+      categories: [String]!
       description: String!
       creatorId: ID!
     ): Post!
