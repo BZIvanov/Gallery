@@ -34,9 +34,15 @@ exports.typeDefs = gql`
     token: String!
   }
 
+  type PostsPage {
+    posts: [Post]
+    hasMore: Boolean
+  }
+
   type Query {
     getCurrentUser: User
     getPosts: [Post]
+    infiniteScrollPosts(pageNum: Int!, pageSize: Int!): PostsPage
   }
 
   type Mutation {
