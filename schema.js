@@ -42,6 +42,7 @@ exports.typeDefs = gql`
   type Query {
     getCurrentUser: User
     getPosts: [Post]
+    getPost(postId: ID!): Post!
     infiniteScrollPosts(pageNum: Int!, pageSize: Int!): PostsPage
   }
 
