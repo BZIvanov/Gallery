@@ -39,6 +39,11 @@ exports.typeDefs = gql`
     hasMore: Boolean
   }
 
+  type LikesFaves {
+    likes: Int
+    favorites: [Post]
+  }
+
   type Query {
     getCurrentUser: User
     getPosts: [Post]
@@ -55,6 +60,8 @@ exports.typeDefs = gql`
       creatorId: ID!
     ): Post!
     addPostMessage(messageBody: String!, userId: ID!, postId: ID!): Message!
+    likePost(postId: ID!, username: String!): LikesFaves!
+    unlikePost(postId: ID!, username: String!): LikesFaves!
     signinUser(username: String!, password: String!): Token
     signupUser(username: String!, email: String!, password: String!): Token
   }
