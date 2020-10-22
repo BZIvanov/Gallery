@@ -48,12 +48,20 @@
     <div class="mt-3">
       <v-layout class="mb-3" v-if="user">
         <v-flex xs12>
-          <v-form>
+          <v-form
+            v-model="isFormValid"
+            lazy-validation
+            ref="form"
+            @submit.prevent="handleAddPostMessage"
+          >
             <v-layout row>
               <v-flex xs12>
                 <v-text-field
+                  :rules="messageRules"
+                  v-model="messageBody"
                   clearable
-                  append-outer-icon="mdi-send"
+                  :append-outer-icon="messageBody && 'mdi-send'"
+                  @click:append-outer="handleAddPostMessage"
                   label="Add Message"
                   type="text"
                   prepend-icon="mdi-email"
@@ -72,7 +80,7 @@
 
             <template v-for="message in getPost.messages">
               <v-divider :key="message._id"></v-divider>
-              <v-list-item avatar inset :key="message.title">
+              <v-list-item inset :key="message.title">
                 <v-list-item-avatar>
                   <img :src="message.messageUser.avatar" />
                 </v-list-item-avatar>
@@ -81,16 +89,19 @@
                   <v-list-item-title>
                     {{ message.messageBody }}
                   </v-list-item-title>
-                  <v-list-item-sub-title>
+                  <v-list-item-subtitle>
                     {{ message.messageUser.username }}
                     <span class="grey--text text--lighten-1 hidden-xs-only">{{
                       message.messageDate
                     }}</span>
-                  </v-list-item-sub-title>
+                  </v-list-item-subtitle>
                 </v-list-item-content>
 
                 <v-list-item-action class="hidden-xs-only">
-                  <v-icon color="grey">mdi-chat</v-icon>
+                  <v-icon
+                    :color="checkIfOwnMessage(message) ? 'accent' : 'grey'"
+                    >mdi-chat</v-icon
+                  >
                 </v-list-item-action>
               </v-list-item>
             </template>
@@ -103,7 +114,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { GET_POST } from '../../store/queries';
+import { GET_POST, ADD_POST_MESSAGE } from '../../store/queries';
 
 export default {
   name: 'Post',
@@ -111,6 +122,14 @@ export default {
   data() {
     return {
       dialog: false,
+      messageBody: '',
+      isFormValid: true,
+      messageRules: [
+        (message) => !!message || 'Message is required',
+        (message) =>
+          (message && message.length < 75) ||
+          'Message must be less than 75 characters',
+      ],
     };
   },
   apollo: {
@@ -127,6 +146,37 @@ export default {
     ...mapGetters(['user']),
   },
   methods: {
+    handleAddPostMessage() {
+      if (this.$refs.form.validate()) {
+        const variables = {
+          messageBody: this.messageBody,
+          userId: this.user._id,
+          postId: this.postId,
+        };
+        this.$apollo
+          .mutate({
+            mutation: ADD_POST_MESSAGE,
+            variables,
+            update: (cache, { data: { addPostMessage } }) => {
+              const data = cache.readQuery({
+                query: GET_POST,
+                variables: { postId: this.postId },
+              });
+              data.getPost.messages.unshift(addPostMessage);
+              cache.writeQuery({
+                query: GET_POST,
+                variables: { postId: this.postId },
+                data,
+              });
+            },
+          })
+          .then(({ data }) => {
+            this.$refs.form.reset();
+            console.log(data.addPostMessage);
+          })
+          .catch((err) => console.error(err));
+      }
+    },
     goToPreviousPage() {
       this.$router.go(-1);
     },
@@ -134,6 +184,9 @@ export default {
       if (window.innerWidth > 500) {
         this.dialog = !this.dialog;
       }
+    },
+    checkIfOwnMessage(message) {
+      return this.user && this.user._id === message.messageUser._id;
     },
   },
 };
