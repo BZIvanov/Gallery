@@ -54,6 +54,7 @@ exports.typeDefs = gql`
       description: String!
       creatorId: ID!
     ): Post!
+    addPostMessage(messageBody: String!, userId: ID!, postId: ID!): Message!
     signinUser(username: String!, password: String!): Token
     signupUser(username: String!, email: String!, password: String!): Token
   }
