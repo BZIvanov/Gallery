@@ -46,6 +46,8 @@
         <v-spacer></v-spacer>
 
         <v-text-field
+          v-model="searchTerm"
+          @input="handleSearchPosts"
           flex
           prepend-icon="mdi-card-search"
           placeholder="Search posts"
@@ -139,6 +141,7 @@ export default {
   name: 'App',
   data() {
     return {
+      searchTerm: '',
       sideNav: false,
       authSnackbar: false,
       authErrorSnackbar: false,
@@ -193,6 +196,11 @@ export default {
     },
   },
   methods: {
+    handleSearchPosts() {
+      this.$store.dispatch('searchPosts', {
+        searchTerm: this.searchTerm,
+      });
+    },
     handleSignoutUser() {
       this.$store.dispatch('signoutUser');
     },

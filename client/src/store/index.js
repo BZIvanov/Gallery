@@ -5,6 +5,7 @@ import { defaultClient as apolloClient } from '../main';
 import {
   GET_CURRENT_USER,
   GET_POSTS,
+  SEARCH_POSTS,
   ADD_POST,
   SIGNIN_USER,
   SIGNUP_USER,
@@ -67,6 +68,14 @@ export default new Vuex.Store({
           commit('setLoading', false);
           console.error(err);
         });
+    },
+    searchPosts: ({ commit }, payload) => {
+      apolloClient
+        .query({ query: SEARCH_POSTS, variables: payload })
+        .then(({ data }) => {
+          console.log(data.searchPosts);
+        })
+        .catch((err) => console.error(err));
     },
     addPost: ({ commit }, payload) => {
       apolloClient
