@@ -14,7 +14,9 @@
                 <div class="hidden-xs-only font-weight-thin">
                   {{ user.favorites.length }} Favorites
                 </div>
-                <div class="hidden-xs-only font-weight-thin">2 Posts Added</div>
+                <div class="hidden-xs-only font-weight-thin">
+                  {{ userPosts.length }} Posts Added
+                </div>
               </div>
             </v-card-title>
           </v-flex>
@@ -46,6 +48,37 @@
         </v-flex>
       </v-layout>
     </v-container>
+
+    <v-container v-if="!userPosts.length">
+      <v-layout row wrap>
+        <v-flex xs12>
+          <h2>You have no posts currently. Go and add some!</h2>
+        </v-flex>
+      </v-layout>
+    </v-container>
+    <v-container class="mt-3" v-else>
+      <v-flex xs12>
+        <h2 class="font-weight-light">
+          Your Posts
+          <span class="font-weight-regular">({{ userPosts.length }})</span>
+        </h2>
+      </v-flex>
+      <v-layout row wrap>
+        <v-flex xs12 sm6 v-for="post in userPosts" :key="post._id">
+          <v-card class="mt-3 ml-1 mr-2" hover>
+            <v-btn class="ma-2" color="info" floating fab small dark>
+              <v-icon>mdi-account-edit</v-icon>
+            </v-btn>
+            <v-btn color="error" floating fab small dark>
+              <v-icon>mdi-delete</v-icon>
+            </v-btn>
+
+            <v-img height="30vh" :src="post.imageUrl"></v-img>
+            <v-card-text>{{ post.title }}</v-card-text>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
   </v-container>
 </template>
 
@@ -55,7 +88,17 @@ import { mapGetters } from 'vuex';
 export default {
   name: 'Profile',
   computed: {
-    ...mapGetters(['user', 'userFavorites']),
+    ...mapGetters(['user', 'userFavorites', 'userPosts']),
+  },
+  created() {
+    this.handleGetUserPosts();
+  },
+  methods: {
+    handleGetUserPosts() {
+      this.$store.dispatch('getUserPosts', {
+        userId: this.user._id,
+      });
+    },
   },
 };
 </script>
