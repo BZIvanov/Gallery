@@ -35,6 +35,9 @@ module.exports = {
       });
       return post;
     },
+    getUserPosts: async (_, { userId }, { Post }) => {
+      return await Post.find({ createdBy: userId });
+    },
     searchPosts: async (_, { searchTerm }, { Post }) => {
       if (searchTerm) {
         return await Post.find(

@@ -83,6 +83,20 @@ export const ADD_POST = gql`
   }
 `;
 
+export const GET_USER_POSTS = gql`
+  query($userId: ID!) {
+    getUserPosts(userId: $userId) {
+      _id
+      title
+      imageUrl
+      description
+      categories
+      createdDate
+      likes
+    }
+  }
+`;
+
 export const SEARCH_POSTS = gql`
   query($searchTerm: String) {
     searchPosts(searchTerm: $searchTerm) {
