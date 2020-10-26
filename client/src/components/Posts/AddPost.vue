@@ -52,6 +52,8 @@
                 :items="[
                   'Art',
                   'Education',
+                  'Food',
+                  'Furniture',
                   'Travel',
                   'Photography',
                   'Technology',
