@@ -95,6 +95,17 @@ module.exports = {
       }).save();
       return newPost;
     },
+    updateUserPost: async (
+      _,
+      { postId, userId, title, imageUrl, categories, description },
+      { Post }
+    ) => {
+      return await Post.findOneAndUpdate(
+        { _id: postId, createdBy: userId },
+        { $set: { title, imageUrl, categories, description } },
+        { new: true }
+      );
+    },
     addPostMessage: async (_, { messageBody, userId, postId }, { Post }) => {
       const newMessage = {
         messageBody,

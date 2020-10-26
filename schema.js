@@ -61,6 +61,14 @@ exports.typeDefs = gql`
       description: String!
       creatorId: ID!
     ): Post!
+    updateUserPost(
+      postId: ID!
+      userId: ID!
+      title: String!
+      imageUrl: String!
+      categories: [String]!
+      description: String!
+    ): Post!
     addPostMessage(messageBody: String!, userId: ID!, postId: ID!): Message!
     likePost(postId: ID!, username: String!): LikesFaves!
     unlikePost(postId: ID!, username: String!): LikesFaves!
