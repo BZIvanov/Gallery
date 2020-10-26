@@ -67,7 +67,7 @@
         <v-flex xs12 sm6 v-for="post in userPosts" :key="post._id">
           <v-card class="mt-3 ml-1 mr-2" hover>
             <v-btn
-              @click="editPostDialog = true"
+              @click="loadPost(post)"
               class="ma-2"
               color="info"
               floating
@@ -164,7 +164,13 @@
 
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn type="submit" class="success--text" text>Update</v-btn>
+              <v-btn
+                :disabled="!isFormValid"
+                type="submit"
+                class="success--text"
+                text
+                >Update</v-btn
+              >
               <v-btn class="error--text" text @click="editPostDialog = false"
                 >Cancel</v-btn
               >
@@ -219,7 +225,28 @@ export default {
       });
     },
     handleUpdateUserPost() {
-      // update user post action
+      if (this.$refs.form.validate()) {
+        this.$store.dispatch('updateUserPost', {
+          postId: this.postId,
+          userId: this.user._id,
+          title: this.title,
+          imageUrl: this.imageUrl,
+          categories: this.categories,
+          description: this.description,
+        });
+        this.editPostDialog = false;
+      }
+    },
+    loadPost(
+      { _id, title, imageUrl, categories, description },
+      editPostDialog = true
+    ) {
+      this.editPostDialog = editPostDialog;
+      this.postId = _id;
+      this.title = title;
+      this.imageUrl = imageUrl;
+      this.categories = categories;
+      this.description = description;
     },
   },
 };
