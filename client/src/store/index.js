@@ -6,6 +6,7 @@ import {
   GET_CURRENT_USER,
   GET_POSTS,
   GET_USER_POSTS,
+  INFINITE_SCROLL_POSTS,
   SEARCH_POSTS,
   ADD_POST,
   UPDATE_USER_POST,
@@ -125,6 +126,15 @@ export default new Vuex.Store({
               ...payload,
             },
           },
+          refetchQueries: [
+            {
+              query: INFINITE_SCROLL_POSTS,
+              variables: {
+                pageNum: 1,
+                pageSize: 2,
+              },
+            },
+          ],
         })
         .then(({ data }) => {
           console.log(data.addPost);
