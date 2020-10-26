@@ -45,7 +45,10 @@
                     post.createdBy.username
                   }}</v-list-item-title>
                   <v-list-item-subtitle class="font-weight-thin"
-                    >Added {{ post.createdDate }}</v-list-item-subtitle
+                    >Added
+                    {{
+                      formatCreatedDate(post.createdDate)
+                    }}</v-list-item-subtitle
                   >
                 </v-list-item-content>
 
@@ -72,6 +75,7 @@
 </template>
 
 <script>
+import moment from 'moment';
 import { INFINITE_SCROLL_POSTS } from '../../store/queries';
 
 const pageSize = 2;
@@ -97,6 +101,9 @@ export default {
   methods: {
     goToPost(postId) {
       this.$router.push(`/posts/${postId}`);
+    },
+    formatCreatedDate(date) {
+      return moment(new Date(parseInt(date))).format('ll');
     },
     showMorePosts() {
       this.pageNum += 1;

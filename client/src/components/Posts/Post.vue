@@ -96,7 +96,7 @@
                   <v-list-item-subtitle>
                     {{ message.messageUser.username }}
                     <span class="grey--text text--lighten-1 hidden-xs-only">{{
-                      message.messageDate
+                      getTimeFromNow(message.messageDate)
                     }}</span>
                   </v-list-item-subtitle>
                 </v-list-item-content>
@@ -117,6 +117,7 @@
 </template>
 
 <script>
+import moment from 'moment';
 import { mapGetters } from 'vuex';
 import {
   GET_POST,
@@ -156,6 +157,9 @@ export default {
     ...mapGetters(['user', 'userFavorites']),
   },
   methods: {
+    getTimeFromNow(time) {
+      return moment(new Date(parseInt(time))).fromNow();
+    },
     checkIfPostLiked(postId) {
       if (
         this.userFavorites &&
